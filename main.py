@@ -1,5 +1,3 @@
-SC_USER_ID = "jumang4423"
-
 from selenium import webdriver
 import time
 import json
@@ -13,6 +11,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # import firefox options
 from selenium.webdriver.firefox.options import Options
+
+SC_USER_ID = ""
 
 
 def get_id_by_url(url):
@@ -55,6 +55,7 @@ def get_followers(driver):
 
     # start scrolling
     all_followers = get_follower_cnt()
+    print(f"{SC_USER_ID} has {all_followers} followers.")
     pbar = tqdm(total=all_followers, desc="Fetching followers...")
     while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
@@ -83,7 +84,7 @@ def get_followers(driver):
 def save_followers(followers):
     cur_unix = int(time.time())
     with open(f"tmp/{SC_USER_ID}_{cur_unix}.json", "w") as f:
-        f.write(json.dumps(followers))
+        f.write(json.dumps(followers, ensure_ascii=False))
 
 
 def update_followers():
@@ -159,16 +160,28 @@ def display_diff(diff_follower):
         print(f"[{state}] {user_state.name} (@{user_state.id})")
 
 
+def get_history_cnt():
+    files = os.listdir("tmp")
+    files = [f for f in files if f.startswith(SC_USER_ID)]
+    return len(files)
+
+
 def get_op():
-    print("(0): update followers, (1): display diff")
+    global SC_USER_ID
+    print("soundcloud user id: ", end="")
+    SC_USER_ID = input()
+    history_cnt = get_history_cnt()
+    print(f"({history_cnt} history found.)")
+    print(
+        "(0)update cur followers, (1)display diff history (2)diff by other artist: ",
+        end="",
+    )
     op = int(input())
     return op
 
 
 if __name__ == "__main__":
     make_tmp_dir()
-    follower_cnt = get_follower_cnt()
-    print(f"{SC_USER_ID} has {follower_cnt} followers.")
     op = get_op()
     if op == 0:
         update_followers()
@@ -186,3 +199,8 @@ if __name__ == "__main__":
             print(f"- {latest}")
             diff_follower = get_diff_follower(latest, second_latest)
             display_diff(diff_follower)
+    elif op == 2:
+        pass
+    else:
+        print("huh?")
+        exit(1)
