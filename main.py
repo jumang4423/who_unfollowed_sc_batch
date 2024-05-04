@@ -1,4 +1,3 @@
-from selenium import webdriver
 import time
 import json
 import os
@@ -10,37 +9,25 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # import firefox options
-from selenium.webdriver.firefox.options import Options
+
+from src.util import get_id_by_url, make_tmp_dir
+from src.driver import get_driver
 
 SC_USER_ID = ""
 
 
-def get_id_by_url(url):
-    return url.split("/")[-1]
-
-
-def make_tmp_dir():
-    if not os.path.exists("tmp"):
-        os.makedirs("tmp")
-
-
-def get_follower_cnt():
-    url = f"https://soundcloud.com/{SC_USER_ID}"
-    r = requests.get(url)
-    r_text = r.text
-    el = "followers_count"
-    follower_cnt = re.search(f'"{el}":(\d+)', r_text).group(1)
-    return int(follower_cnt)
-
-
-def get_driver():
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument(
-        "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango",
-    )
-    driver = webdriver.Firefox(options=options)
-    return driver
+def get_follower_cnt(uid):
+    while True:
+        try:
+            url = f"https://soundcloud.com/{uid}"
+            r = requests.get(url)
+            r_text = r.text
+            el = "followers_count"
+            follower_cnt = re.search(f'"{el}":(\d+)', r_text).group(1)
+            return int(follower_cnt)
+        except:
+            print("???")
+            time.sleep(10)
 
 
 def get_followers_by_fetched(driver):
@@ -54,7 +41,7 @@ def get_followers(driver):
     driver.get(url)
 
     # start scrolling
-    all_followers = get_follower_cnt()
+    all_followers = get_follower_cnt(SC_USER_ID)
     print(f"{SC_USER_ID} has {all_followers} followers.")
     pbar = tqdm(total=all_followers, desc="Fetching followers...")
     while True:
@@ -73,11 +60,11 @@ def get_followers(driver):
 
     # finally extract the followers
     followers_obj = get_followers_by_fetched(driver)
-    followers = {}
+    followers = []
     for follower_obj in followers_obj:
         follower_url = follower_obj.get_attribute("href")
         follower_id = get_id_by_url(follower_url)
-        followers[follower_id] = follower_obj.text
+        followers.append(follower_id)
     return followers
 
 
@@ -93,13 +80,18 @@ def update_followers():
     save_followers(followers)
 
 
+def get_sorted_timestamps(user_id):
+    files = os.listdir("tmp")
+    files = [f for f in files if f.startswith(user_id)]
+    files = sorted(files, reverse=True)
+    return files
+
+
 def get_set_two_timestamp() -> list[tuple]:
     """
     get user latest two timestamp json
     """
-    files = os.listdir("tmp")
-    files = [f for f in files if f.startswith(SC_USER_ID)]
-    files = sorted(files, reverse=True)
+    files = get_sorted_timestamps(SC_USER_ID)
     if len(files) < 2:
         return []
     diffs = []
@@ -124,9 +116,8 @@ def get_latesest_two_timestamp():
 
 
 class UserDiffState:
-    def __init__(self, id, name, unfollowed, newly_followed):
+    def __init__(self, id, unfollowed, newly_followed):
         self.id = id
-        self.name = name
         self.unfollowed = unfollowed
         self.newly_followed = newly_followed
 
@@ -140,13 +131,13 @@ def get_diff_follower(latest, sencond_latest) -> list[UserDiffState]:
     with open(f"tmp/{second_latest}", "r") as f:
         second_latest_followers = json.load(f)
     diff_follower = []
-    for id, name in latest_followers.items():
+    for id in latest_followers:
         if id not in second_latest_followers:
-            user_state = UserDiffState(id, name, False, True)
+            user_state = UserDiffState(id, False, True)
             diff_follower.append(user_state)
-    for id, name in second_latest_followers.items():
+    for id in second_latest_followers:
         if id not in latest_followers:
-            user_state = UserDiffState(id, name, True, False)
+            user_state = UserDiffState(id, True, False)
             diff_follower.append(user_state)
     return diff_follower
 
@@ -157,7 +148,7 @@ def display_diff(diff_follower):
         return
     for user_state in diff_follower:
         state = "unfollowed" if user_state.unfollowed else "followed"
-        print(f"[{state}] {user_state.name} (@{user_state.id})")
+        print(f"[{state}] (@{user_state.id})")
 
 
 def get_history_cnt():
@@ -166,24 +157,88 @@ def get_history_cnt():
     return len(files)
 
 
-def get_op():
-    global SC_USER_ID
-    print("soundcloud user id: ", end="")
-    SC_USER_ID = input()
-    history_cnt = get_history_cnt()
-    print(f"({history_cnt} history found.)")
+def ask_op():
     print(
-        "(0)update cur followers, (1)display diff history (2)diff by other artist: ",
+        "(0)update_cur_followers, (1)display_diff_history (2)diff_other_artist (3)filter_than_1000_followers_artist: ",
         end="",
     )
     op = int(input())
     return op
 
 
+def ask_artist():
+    print("Enter comparison artist id: ", end="")
+    artist_id = input()
+    return artist_id
+
+
+def get_username_by_argument():
+    print("Enter username: ", end="")
+    username = input()
+    return username
+
+
+def save_comp(u1, u2, mutual, diff):
+    with open(f"tmp/mut_{u1}_{u2}.json", "w") as f:
+        f.write(json.dumps(list(mutual), ensure_ascii=False))
+    with open(f"tmp/diff_{u1}_{u2}.json", "w") as f:
+        f.write(json.dumps(list(diff), ensure_ascii=False))
+
+
+def ask_filename():
+    print("Enter filename from tmp (hoge.json): ", end="")
+    filename = input()
+    # check availability
+    if not os.path.exists(f"tmp/{filename}"):
+        print("File not found")
+        exit(1)
+    return filename
+
+
+def two_diff(com_artist_id):
+    me_latest_timestamp = get_sorted_timestamps(SC_USER_ID)
+    if len(me_latest_timestamp) == 0:
+        print("No history of me")
+        exit(1)
+    me_latest_timestamp = me_latest_timestamp[0]
+    com_latest_timestamp = get_sorted_timestamps(com_artist_id)
+    if len(com_latest_timestamp) == 0:
+        print("No history of comparison artist")
+        exit(1)
+    com_latest_timestamp = com_latest_timestamp[0]
+    me_followers = []
+    com_followers = []
+    with open(f"tmp/{me_latest_timestamp}", "r") as f:
+        me_followers = json.load(f)
+    with open(f"tmp/{com_latest_timestamp}", "r") as f:
+        com_followers = json.load(f)
+    me_followers = set(me_followers)
+    com_followers = set(com_followers)
+    mut = []
+    diff = []
+    for f in com_followers:
+        if f in me_followers:
+            mut.append(f)
+        else:
+            diff.append(f)
+    return mut, diff
+
+
+def get_rank_filtered(followers):
+    THREADHOLD = 1000
+    filtered = []
+    for follower in tqdm(followers, desc="Filtering..."):
+        follower_cnt = get_follower_cnt(follower)
+        if follower_cnt > THREADHOLD:
+            filtered.append(follower)
+    return filtered
+
+
 if __name__ == "__main__":
     make_tmp_dir()
-    op = get_op()
+    op = ask_op()
     if op == 0:
+        SC_USER_ID = get_username_by_argument()
         update_followers()
         latest, second_latest = get_latesest_two_timestamp()
         diff_follower = get_diff_follower(latest, second_latest)
@@ -193,6 +248,7 @@ if __name__ == "__main__":
                 os.remove(f"tmp/{second_latest}")
                 print("No diff, removed second latest timestamp.")
     elif op == 1:
+        SC_USER_ID = get_username_by_argument()
         diffs = get_set_two_timestamp()
         diffs.reverse()
         for latest, second_latest in diffs:
@@ -200,7 +256,22 @@ if __name__ == "__main__":
             diff_follower = get_diff_follower(latest, second_latest)
             display_diff(diff_follower)
     elif op == 2:
-        pass
+        SC_USER_ID = get_username_by_argument()
+        com_artist_id = ask_artist()
+        mut, diff = two_diff(com_artist_id)
+        print(f"found {len(mut)} mutual")
+        print(f"found {len(diff)} diff")
+        print("saving...")
+        save_comp(SC_USER_ID, com_artist_id, mut, diff)
+    elif op == 3:
+        filename = ask_filename()
+        with open(f"tmp/{filename}", "r") as f:
+            followers = json.load(f)
+        ranked = get_rank_filtered(followers)
+        print(f"filtered {len(ranked)}")
+        with open(f"tmp/ranked_{filename}", "w") as f:
+            f.write(json.dumps(ranked, ensure_ascii=False))
+
     else:
         print("huh?")
         exit(1)

@@ -1,0 +1,23 @@
+1714803598878	geckodriver	INFO	Listening on 127.0.0.1:49663
+1714803598984	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "43973" "-no-remote"
+2024/05/04 15:19:59.070273 cmd_run.go:1081: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1714803603487	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1714803604009	Marionette	INFO	Listening on port 38583
+WebDriver BiDi listening on ws://127.0.0.1:43973
+1714803604477	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+DevTools listening on ws://127.0.0.1:43973/devtools/browser/9b28c6a1-f0df-4d1d-bcb4-daaaa5fb209c
+console.error: (new TypeError("linkMap is undefined", "resource://gre/modules/NewTabUtils.sys.mjs", 2003))
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1714803633777	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+1714806150862	geckodriver	INFO	Listening on 127.0.0.1:44149
+1714806151366	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "42305" "-no-remote"
+2024/05/04 16:02:31.444769 cmd_run.go:1081: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+*** You are running in headless mode.
