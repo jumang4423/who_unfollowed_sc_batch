@@ -9,6 +9,9 @@ def get_id_by_url(url):
 def make_tmp_dir():
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
+    if not os.path.exists("tmp/diff_cache.json"):
+        with open("tmp/diff_cache.json", "w") as f:
+            json.dump({}, f)
 
 
 def get_home_dir():

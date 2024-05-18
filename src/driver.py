@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from configparser import ConfigParser
-from src.util import get_home_dir, get_settings
+from src.util import get_settings
 
 
 def get_default_profile_path():
@@ -31,4 +31,5 @@ def get_driver():
     options.add_argument("--headless")
     options.add_argument(f"--profile {default_profile_path}")
     driver = webdriver.Firefox(options=options)
+    print("Driver created")
     return driver

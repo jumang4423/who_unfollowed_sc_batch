@@ -16,6 +16,18 @@ from src.driver import get_driver
 SC_USER_ID = ""
 
 
+class bcolors:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+
+
 def get_follower_cnt(uid):
     while True:
         try:
@@ -77,6 +89,7 @@ def save_followers(followers):
 def update_followers():
     driver = get_driver()
     followers = get_followers(driver)
+    driver.quit()
     save_followers(followers)
 
 
@@ -116,13 +129,41 @@ def get_latesest_two_timestamp():
 
 
 class UserDiffState:
-    def __init__(self, id, unfollowed, newly_followed):
+    def __init__(self, id, unfollowed, newly_followed, account_deleted):
         self.id = id
         self.unfollowed = unfollowed
         self.newly_followed = newly_followed
+        self.account_deleted = account_deleted
+
+    # json serialize
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "unfollowed": self.unfollowed,
+            "newly_followed": self.newly_followed,
+            "account_deleted": self.account_deleted,
+        }
 
 
 def get_diff_follower(latest, sencond_latest) -> list[UserDiffState]:
+    # get from diff cache
+    diff_cache = {}
+    with open("tmp/diff_cache.json", "r") as f:
+        diff_cache = json.load(f)
+    ca_id = f"{latest.split('.')[0]}_{sencond_latest.split('.')[0]}"
+    if ca_id in diff_cache:
+        diffs = diff_cache[ca_id]
+        new_diffs = []
+        for diff in diffs:
+            new_diff = UserDiffState(
+                diff["id"],
+                diff["unfollowed"],
+                diff["newly_followed"],
+                diff["account_deleted"],
+            )
+            new_diffs.append(new_diff)
+        return new_diffs
+    # impl cache
     if latest is None:
         print("warning: no latest timestamp")
         return []
@@ -133,22 +174,51 @@ def get_diff_follower(latest, sencond_latest) -> list[UserDiffState]:
     diff_follower = []
     for id in latest_followers:
         if id not in second_latest_followers:
-            user_state = UserDiffState(id, False, True)
+            user_state = UserDiffState(id, False, True, False)
             diff_follower.append(user_state)
     for id in second_latest_followers:
         if id not in latest_followers:
-            user_state = UserDiffState(id, True, False)
+            is_account_deleted = detect_unfollow_or_account_delete(id)
+            user_state = UserDiffState(
+                id, not is_account_deleted, False, is_account_deleted
+            )
             diff_follower.append(user_state)
+    # save to cache
+    diff_cache[ca_id] = [user_state.to_dict() for user_state in diff_follower]
+    with open("tmp/diff_cache.json", "w") as f:
+        f.write(json.dumps(diff_cache, ensure_ascii=False))
+
     return diff_follower
+
+
+def detect_unfollow_or_account_delete(user_id):
+    # check if user_id is valid
+    url = f"https://soundcloud.com/{user_id}"
+    r = requests.get(url)
+    if r.status_code == 404:
+        return True
+    return False
 
 
 def display_diff(diff_follower):
     if len(diff_follower) == 0:
+        print(bcolors.OKGREEN, end="")
         print("(No diff)")
+        print(bcolors.ENDC, end="")
         return
     for user_state in diff_follower:
-        state = "unfollowed" if user_state.unfollowed else "followed"
-        print(f"[{state}] (@{user_state.id})")
+        state = ""
+        if user_state.unfollowed:
+            print(bcolors.FAIL, end="")
+            state += "unfollowed"
+        elif user_state.account_deleted:
+            print(bcolors.WARNING, end="")
+            state += "account_deleted"
+        else:
+            print(bcolors.OKGREEN, end="")
+            state += "newly_followed"
+        print(f"[{state}] (https://www.soundcloud.com/{user_state.id})")
+        print(bcolors.ENDC, end="")
 
 
 def get_history_cnt():
