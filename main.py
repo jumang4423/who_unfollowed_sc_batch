@@ -229,7 +229,7 @@ def get_history_cnt():
 
 def ask_op():
     print(
-        "(0)update_cur_followers, (1)display_diff_history (2)diff_other_artist (3)filter_than_1000_followers_artist: ",
+        "(0)update_cur_followers, (1)display_diff_history (2)diff_other_artist (3)filter_than_1000_followers_artist (4)total_force: ",
         end="",
     )
     op = int(input())
@@ -304,6 +304,14 @@ def get_rank_filtered(followers):
     return filtered
 
 
+def get_total_force(follower_ids):
+    total_force = 0
+    for follower_id in tqdm(follower_ids, desc="Calculating total force..."):
+        follower_cnt = get_follower_cnt(follower_id)
+        total_force += follower_cnt
+    return total_force
+
+
 if __name__ == "__main__":
     make_tmp_dir()
     op = ask_op()
@@ -341,6 +349,14 @@ if __name__ == "__main__":
         print(f"filtered {len(ranked)}")
         with open(f"tmp/ranked_{filename}", "w") as f:
             f.write(json.dumps(ranked, ensure_ascii=False))
+    elif op == 4:
+        SC_USER_ID = get_username_by_argument()
+        latest = get_sorted_timestamps(SC_USER_ID)[0]
+        follower_ids = []
+        with open(f"tmp/{latest}", "r") as f:
+            follower_ids = json.load(f)
+        total_force = get_total_force(follower_ids)
+        print(f"Total force: {total_force}")
 
     else:
         print("huh?")
