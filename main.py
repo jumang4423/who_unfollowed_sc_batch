@@ -29,6 +29,12 @@ class bcolors:
 
 
 def get_follower_cnt(uid):
+    # open tmp/followers_cache.json
+    if os.path.exists("tmp/followers_cache.json"):
+        with open("tmp/followers_cache.json", "r") as f:
+            followers_cache = json.load(f)
+            if uid in followers_cache:
+                return followers_cache[uid]
     while True:
         try:
             url = f"https://soundcloud.com/{uid}"
@@ -36,9 +42,15 @@ def get_follower_cnt(uid):
             r_text = r.text
             el = "followers_count"
             follower_cnt = re.search(f'"{el}":(\d+)', r_text).group(1)
-            return int(follower_cnt)
-        except:
-            print("???")
+            follower_cnt_int = int(follower_cnt)
+            # save to cache
+            followers_cache[uid] = follower_cnt_int
+            with open("tmp/followers_cache.json", "w") as f:
+                f.write(json.dumps(followers_cache, ensure_ascii=False))
+
+            return follower_cnt_int
+        except Exception as e:
+            print(e)
             time.sleep(10)
 
 
@@ -91,6 +103,17 @@ def update_followers():
     followers = get_followers(driver)
     driver.quit()
     save_followers(followers)
+    latest, second_latest = get_latesest_two_timestamp()
+    if latest is None:
+        return
+    diff_follower = get_diff_follower(latest, second_latest)
+    if len(diff_follower) == 0:
+        if second_latest is not None:
+            os.remove(f"tmp/{second_latest}")
+            print("No diff, removed second latest timestamp.")
+    else:
+        # display diff
+        display_diff(diff_follower)
 
 
 def get_sorted_timestamps(user_id):
@@ -229,7 +252,7 @@ def get_history_cnt():
 
 def ask_op():
     print(
-        "(0)update_cur_followers, (1)display_diff_history (2)diff_other_artist (3)filter_than_1000_followers_artist (4)total_force: ",
+        "(0)update_cur_followers, (1)display_history (2)diff_other_artist (3)filter_than_n_followers_artist: ",
         end="",
     )
     op = int(input())
@@ -294,8 +317,8 @@ def two_diff(com_artist_id):
     return mut, diff
 
 
-def get_rank_filtered(followers):
-    THREADHOLD = 1000
+def get_rank_filtered(followers, n):
+    THREADHOLD = n
     filtered = []
     for follower in tqdm(followers, desc="Filtering..."):
         follower_cnt = get_follower_cnt(follower)
@@ -317,18 +340,36 @@ if __name__ == "__main__":
     op = ask_op()
     if op == 0:
         SC_USER_ID = get_username_by_argument()
+        print(f"Updating followers list of {SC_USER_ID}")
         update_followers()
-        latest, second_latest = get_latesest_two_timestamp()
-        diff_follower = get_diff_follower(latest, second_latest)
-        # remove second latest timestamp if no diff, save space
-        if len(diff_follower) == 0:
-            if second_latest is not None:
-                os.remove(f"tmp/{second_latest}")
-                print("No diff, removed second latest timestamp.")
+        latest = get_sorted_timestamps(SC_USER_ID)[0]
+        follower_ids = []
+        with open(f"tmp/{latest}", "r") as f:
+            follower_ids = json.load(f)
+        print(f"Total followers: {len(follower_ids)}")
+        print("Calculating total force...")
+        total_force = get_total_force(follower_ids)
+        print(f"Total force: {total_force}")
+        print(
+            f"Average force: {total_force / len(follower_ids)} (higher: creator, lower: consumer)"
+        )
+        # save to force_cache
+        with open("tmp/force_cache.json", "r") as f:
+            force_cache = json.load(f)
+        force_cache[SC_USER_ID] = {
+            "total_force": total_force,
+            "average_force": total_force / len(follower_ids),
+        }
+        with open("tmp/force_cache.json", "w") as f:
+            f.write(json.dumps(force_cache, ensure_ascii=False))
+        print("Saved to force_cache")
     elif op == 1:
         SC_USER_ID = get_username_by_argument()
         diffs = get_set_two_timestamp()
         diffs.reverse()
+        if len(diffs) == 0:
+            print("No history. To display history, you need at least two timestamps.")
+            exit(1)
         for latest, second_latest in diffs:
             print(f"- {latest}")
             diff_follower = get_diff_follower(latest, second_latest)
@@ -339,25 +380,22 @@ if __name__ == "__main__":
         mut, diff = two_diff(com_artist_id)
         print(f"found {len(mut)} mutual")
         print(f"found {len(diff)} diff")
-        print("saving...")
+        print(f"saving to tmp/mut_{SC_USER_ID}_{com_artist_id}.json")
         save_comp(SC_USER_ID, com_artist_id, mut, diff)
     elif op == 3:
         filename = ask_filename()
         with open(f"tmp/{filename}", "r") as f:
             followers = json.load(f)
-        ranked = get_rank_filtered(followers)
+        dt = 1000
+        n = input(f"Enter threshold(default {dt}): ")
+        if n == "":
+            n = dt
+        else:
+            n = int(n)
+        ranked = get_rank_filtered(followers, n)
         print(f"filtered {len(ranked)}")
         with open(f"tmp/ranked_{filename}", "w") as f:
             f.write(json.dumps(ranked, ensure_ascii=False))
-    elif op == 4:
-        SC_USER_ID = get_username_by_argument()
-        latest = get_sorted_timestamps(SC_USER_ID)[0]
-        follower_ids = []
-        with open(f"tmp/{latest}", "r") as f:
-            follower_ids = json.load(f)
-        total_force = get_total_force(follower_ids)
-        print(f"Total force: {total_force}")
-
     else:
         print("huh?")
         exit(1)
