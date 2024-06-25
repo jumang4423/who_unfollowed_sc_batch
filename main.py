@@ -104,6 +104,7 @@ def update_followers():
     driver.quit()
     save_followers(followers)
     latest, second_latest = get_latesest_two_timestamp()
+    print(latest, second_latest)
     if latest is None:
         return
     diff_follower = get_diff_follower(latest, second_latest)
@@ -168,12 +169,12 @@ class UserDiffState:
         }
 
 
-def get_diff_follower(latest, sencond_latest) -> list[UserDiffState]:
+def get_diff_follower(latest, second_latest) -> list[UserDiffState]:
     # get from diff cache
     diff_cache = {}
     with open("tmp/diff_cache.json", "r") as f:
         diff_cache = json.load(f)
-    ca_id = f"{latest.split('.')[0]}_{sencond_latest.split('.')[0]}"
+    ca_id = f"{latest.split('.')[0]}_{second_latest.split('.')[0]}"
     if ca_id in diff_cache:
         diffs = diff_cache[ca_id]
         new_diffs = []
