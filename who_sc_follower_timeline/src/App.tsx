@@ -36,12 +36,13 @@ function App() {
   }, []);
   return (
     <>
-      <h2>jumango follower timeline on soundcloud</h2>
+      <h1>jumang4423 follower timeline on sc</h1>
+      <h3>green: followed, gray: account deleted, red: unfollowed</h3>
       <pre>
         {timelineD.map((item) => {
           return (
             <div key={item.date}>
-              <div>{item.date}</div>
+              <div>(({item.date}))</div>
               <div>
                 {item.followers.map((follower: any) => {
                   const newly_followed = follower.newly_followed; // green
@@ -54,11 +55,12 @@ function App() {
                     } else if (unfollowed) {
                       return "red";
                     } else if (account_deteled) {
-                      return "yellow";
+                      return "lightgray";
                     }
                   };
                   return (
                     <div key={follower.id}>
+                      {"L "}
                       <a
                         href={`https://soundcloud.com/${follower.id}`}
                         style={{ color: color() }}
