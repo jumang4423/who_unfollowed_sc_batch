@@ -336,6 +336,16 @@ def get_total_force(follower_ids):
     return total_force
 
 
+def save_followers_cache(user_id, follower_ids):
+    print("Saving followers to followers_cache...")
+    with open("tmp/followers_cache.json", "r") as f:
+        followers_cache = json.load(f)
+    followers_cache[user_id] = len(follower_ids)
+    with open("tmp/followers_cache.json", "w") as f:
+        f.write(json.dumps(followers_cache, ensure_ascii=False))
+    print("Saved to followers_cache")
+
+
 if __name__ == "__main__":
     make_tmp_dir()
     op = ask_op()
@@ -348,6 +358,7 @@ if __name__ == "__main__":
         with open(f"tmp/{latest}", "r") as f:
             follower_ids = json.load(f)
         print(f"Total followers: {len(follower_ids)}")
+        save_followers_cache(SC_USER_ID, follower_ids)
         print("Calculating total force...")
         total_force = get_total_force(follower_ids)
         print(f"Total force: {total_force}")
