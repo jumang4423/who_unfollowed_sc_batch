@@ -1328,3 +1328,170 @@ Firefox is already running, but is not responding. To use Firefox, you must firs
 2024/10/31 23:19:39.522059 cmd_run.go:1138: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
 *** You are running in headless mode.
 Firefox is already running, but is not responding. To use Firefox, you must first close the existing Firefox process, restart your device, or use a different profile.
+1730838816749	geckodriver	INFO	Listening on 127.0.0.1:57895
+1730838817435	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "39091" "-no-remote"
+2024/11/06 05:33:38.013934 cmd_run.go:1138: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/local/share/doc /usr/local/share/doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/local/share/doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/cups/doc-root /usr/share/cups/doc-root none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/cups/doc-root" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gimp/2.0/help /usr/share/gimp/2.0/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gimp/2.0/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gtk-doc /usr/share/gtk-doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gtk-doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/libreoffice/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme /usr/share/sphinx_rtd_theme none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/xubuntu-docs" because it would affect the host in "/var/lib/snapd"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1730838827928	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1730838828526	Marionette	INFO	Listening on port 40591
+WebDriver BiDi listening on ws://127.0.0.1:39091
+1730838829030	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+JavaScript warning: https://pagead2.googlesyndication.com/bg/xknHF3PW0JvvHDA3XxSORW-_UJ-303X-f7EebYKOEPk.js line 2 > eval line 5394 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1730839045039	Marionette	INFO	Stopped listening on port 40591
+1734537841519	geckodriver	INFO	Listening on 127.0.0.1:46965
+1734537842055	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "49761" "-no-remote"
+2024/12/19 01:04:02.525642 cmd_run.go:1138: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/local/share/doc /usr/local/share/doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/local/share/doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/cups/doc-root /usr/share/cups/doc-root none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/cups/doc-root" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gimp/2.0/help /usr/share/gimp/2.0/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gimp/2.0/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gtk-doc /usr/share/gtk-doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gtk-doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/libreoffice/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme /usr/share/sphinx_rtd_theme none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/xubuntu-docs" because it would affect the host in "/var/lib/snapd"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1734537851288	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1734537851871	Marionette	INFO	Listening on port 38387
+WebDriver BiDi listening on ws://127.0.0.1:49761
+1734537852253	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.error: (new TypeError("linkMap is undefined", "resource://gre/modules/NewTabUtils.sys.mjs", 2003))
+JavaScript error: , line 0: NetworkError: AutoCancel
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+JavaScript error: , line 0: NetworkError: AutoCancel
+1734537863084	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1734538027940	Marionette	INFO	Stopped listening on port 38387
+1734894508767	geckodriver	INFO	Listening on 127.0.0.1:53261
+1734894509391	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "60367" "-no-remote"
+2024/12/23 04:08:30.712941 cmd_run.go:1138: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/local/share/doc /usr/local/share/doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/local/share/doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/cups/doc-root /usr/share/cups/doc-root none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/cups/doc-root" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gimp/2.0/help /usr/share/gimp/2.0/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gimp/2.0/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gtk-doc /usr/share/gtk-doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gtk-doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/libreoffice/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme /usr/share/sphinx_rtd_theme none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/xubuntu-docs" because it would affect the host in "/var/lib/snapd"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1734894541984	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1734894543152	Marionette	INFO	Listening on port 38825
+WebDriver BiDi listening on ws://127.0.0.1:60367
+1734894543852	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.error: (new TypeError("linkMap is undefined", "resource://gre/modules/NewTabUtils.sys.mjs", 2003))
+JavaScript error: , line 0: NetworkError: AutoCancel
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+JavaScript error: , line 0: NetworkError: AutoCancel
+1734894559030	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1734894743585	Marionette	INFO	Stopped listening on port 38825
+1735217477590	geckodriver	INFO	Listening on 127.0.0.1:48723
+1735217478247	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "48761" "-no-remote"
+2024/12/26 21:51:20.823865 cmd_run.go:1285: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/local/share/doc /usr/local/share/doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/local/share/doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/cups/doc-root /usr/share/cups/doc-root none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/cups/doc-root" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gimp/2.0/help /usr/share/gimp/2.0/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gimp/2.0/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gtk-doc /usr/share/gtk-doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gtk-doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/libreoffice/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme /usr/share/sphinx_rtd_theme none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/xubuntu-docs" because it would affect the host in "/var/lib/snapd"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1735217493929	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1735217494273	Marionette	INFO	Listening on port 46555
+WebDriver BiDi listening on ws://127.0.0.1:48761
+1735217494742	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[Parent 35124, Main Thread] WARNING: Failed to create proxy: Could not connect: No such file or directory
+: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+** (firefox:35124): WARNING **: 21:51:35.582: Failed to create proxy: Could not connect: No such file or directory
+
+[Parent 35124, Main Thread] WARNING: Failed to create proxy: Could not connect: No such file or directory
+: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+** (firefox:35124): WARNING **: 21:51:35.697: Failed to create proxy: Could not connect: No such file or directory
+
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.error: (new TypeError("linkMap is undefined", "resource://gre/modules/NewTabUtils.sys.mjs", 2003))
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: NetworkError: AutoCancel
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1735217671264	Marionette	INFO	Stopped listening on port 46555
+1735567917855	geckodriver	INFO	Listening on 127.0.0.1:35307
+1735567918456	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango" "--remote-debugging-port" "48141" "-no-remote"
+2024/12/30 23:12:00.707017 cmd_run.go:1285: WARNING: cannot start document portal: dial unix /run/user/1000/bus: connect: no such file or directory
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/local/share/doc /usr/local/share/doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/local/share/doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/cups/doc-root /usr/share/cups/doc-root none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/cups/doc-root" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gimp/2.0/help /usr/share/gimp/2.0/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gimp/2.0/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/gtk-doc /usr/share/gtk-doc none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/gtk-doc" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/libreoffice/help /usr/share/libreoffice/help none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/libreoffice/help" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme /usr/share/sphinx_rtd_theme none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/sphinx_rtd_theme" because it would affect the host in "/var/lib/snapd"
+update.go:85: cannot change mount namespace according to change mount (/var/lib/snapd/hostfs/usr/share/xubuntu-docs /usr/share/xubuntu-docs none bind,ro 0 0): cannot write to "/var/lib/snapd/hostfs/usr/share/xubuntu-docs" because it would affect the host in "/var/lib/snapd"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1735567931630	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-profile /home/jumang4423/snap/firefox/common/.mozilla/firefox/irk0149j.jumango"
+1735567932045	Marionette	INFO	Listening on port 38335
+WebDriver BiDi listening on ws://127.0.0.1:48141
+1735567932630	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+[Parent 13380, Main Thread] WARNING: Failed to create proxy: Could not connect: No such file or directory
+: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+** (firefox:13380): WARNING **: 23:12:14.465: Failed to create proxy: Could not connect: No such file or directory
+
+[Parent 13380, Main Thread] WARNING: Failed to create proxy: Could not connect: No such file or directory
+: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+** (firefox:13380): WARNING **: 23:12:14.729: Failed to create proxy: Could not connect: No such file or directory
+
+console.error: (new TypeError("linkMap is undefined", "resource://gre/modules/NewTabUtils.sys.mjs", 2003))
+JavaScript error: , line 0: NetworkError: AutoCancel
+libEGL warning: failed to open /dev/dri/renderD128: Permission denied
+
+1735567943772	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: NetworkError: AutoCancel
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1735568108943	Marionette	INFO	Stopped listening on port 38335
