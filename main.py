@@ -208,10 +208,12 @@ def get_diff_follower(latest, second_latest) -> list[UserDiffState]:
                 id, not is_account_deleted, False, is_account_deleted
             )
             diff_follower.append(user_state)
-    # save to cache
-    diff_cache[ca_id] = [user_state.to_dict() for user_state in diff_follower]
-    with open("tmp/diff_cache.json", "w") as f:
-        f.write(json.dumps(diff_cache, ensure_ascii=False))
+
+    # only save to cache if there are diffs
+    if diff_follower:
+        diff_cache[ca_id] = [user_state.to_dict() for user_state in diff_follower]
+        with open("tmp/diff_cache.json", "w") as f:
+            f.write(json.dumps(diff_cache, ensure_ascii=False))
 
     return diff_follower
 
