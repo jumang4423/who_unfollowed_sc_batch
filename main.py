@@ -7,6 +7,7 @@ import re
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import sys
 
 # import firefox options
 
@@ -346,11 +347,25 @@ def save_followers_cache(user_id, follower_ids):
     print("Saved to followers_cache")
 
 
-if __name__ == "__main__":
+def main():
+    global SC_USER_ID
     make_tmp_dir()
-    op = ask_op()
-    if op == 0:
+
+    if len(sys.argv) > 1:
+        try:
+            op = int(sys.argv[1])
+            if op == 0 and len(sys.argv) > 2:
+                SC_USER_ID = sys.argv[2]
+            else:
+                SC_USER_ID = get_username_by_argument()
+        except ValueError:
+            print("Invalid operation number")
+            exit(1)
+    else:
+        op = ask_op()
         SC_USER_ID = get_username_by_argument()
+
+    if op == 0:
         print(f"Updating followers list of {SC_USER_ID}")
         update_followers()
         latest = get_sorted_timestamps(SC_USER_ID)[0]
@@ -411,3 +426,7 @@ if __name__ == "__main__":
     else:
         print("huh?")
         exit(1)
+
+
+if __name__ == "__main__":
+    main()

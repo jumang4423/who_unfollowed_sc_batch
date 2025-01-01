@@ -22,20 +22,3 @@ def make_tmp_dir():
 
 def get_home_dir():
     return os.path.expanduser("~")
-
-
-def get_settings():
-    filep = "settings.json"
-    if not os.path.exists(filep):
-        print("settings.json not found")
-        exit(1)
-    with open(filep, "r") as f:
-        settings = json.load(f)
-    # validation
-    dot_mozilla_path = settings[".mozilla_path"]
-    if not os.path.exists(dot_mozilla_path):
-        print(".mozilla_path not found")
-        print(f"edit settings.json: {dot_mozilla_path}")
-        exit(1)
-
-    return settings

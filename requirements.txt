@@ -3,3 +3,4 @@ requests
 tqdm
 configparser
 browsermob-proxy
+webdriver-manager
