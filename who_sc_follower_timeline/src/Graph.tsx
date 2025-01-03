@@ -29,7 +29,7 @@ const Graph = () => {
         const isUseFollowerCount = flags.includes(USE_FOLLOWER_COUNT);
         const timeline = Object.entries(data).map(([dateRange, followers]) => {
             const [_, end] = dateRange.split('_').filter(x => x.match(/^\d+$/));
-            const date = new Date(parseInt(end) * 1000).toISOString().split('T')[0];
+            const date = new Date(parseInt(end) * 1000).getTime();
             const netChange = followers.reduce((acc, curr) => {
                 const id: string = curr.id;
                 const followerCount = (isUseFollowerCount ? followersCache[id] : 1) ?? 0;
@@ -47,6 +47,9 @@ const Graph = () => {
                 followers: sum
             };
         });
+
+        console.log('Timeline data:', timeline);
+
         return timeline;
     };
 
@@ -98,9 +101,17 @@ const Graph = () => {
                     margin={{ top: 20, right: 40, bottom: 40, left: 40 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
+                    <XAxis
+                        dataKey="date"
+                        scale="time"
+                        type="number"
+                        domain={['dataMin', 'dataMax']}
+                        tickFormatter={(unixTime) => new Date(unixTime).toLocaleDateString()}
+                    />
+                    <YAxis domain={['auto', 'auto']} />
+                    <Tooltip
+                        labelFormatter={(label) => new Date(label).toLocaleDateString()}
+                    />
                     <Line
                         type="monotone"
                         dataKey="followers"
